@@ -12,12 +12,12 @@ from util import convert2cpu as cpu
 from util import predict_transform
 
 class test_net(nn.Module):
-    def __init__(self, num_layers, input_size):
+    def __init__(self, num_layers, input_size,num_classes = 601):
         super(test_net, self).__init__()
         self.num_layers= num_layers
         self.linear_1 = nn.Linear(input_size, 5)
         self.middle = nn.ModuleList([nn.Linear(5,5) for x in range(num_layers)])
-        self.output = nn.Linear(5,2)
+        self.output = nn.Linear(5,num_classes)
     
     def forward(self, x):
         x = x.view(-1)
