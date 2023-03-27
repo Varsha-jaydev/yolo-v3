@@ -109,7 +109,7 @@ if __name__ ==  '__main__':
 
     CUDA = torch.cuda.is_available()
 
-    num_classes = 80
+    num_classes = 601
     classes = load_classes('data/coco.names') 
 
     #Set up the neural network
@@ -231,7 +231,12 @@ if __name__ ==  '__main__':
             output = prediction
             write = 1
         else:
-            output = torch.cat((output,prediction))
+            output = prediction.view(prediction.size(0), -1)
+            if i == 0:
+                output = output
+            else:
+                output = torch.cat((output,prediction.view(prediction.size(0), -1)), 1)
+
             
         
         
@@ -320,9 +325,3 @@ if __name__ ==  '__main__':
 
     
     torch.cuda.empty_cache()
-    
-    
-        
-        
-    
-    
